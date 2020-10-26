@@ -5,7 +5,7 @@ const Band = require("../models/band");
 const bands = new Bands();
 console.log("init server");
 
-bands.addBand(new Band("Vilma palma"));
+bands.addBand(new Band("Queen"));
 bands.addBand(new Band("Los kafres"));
 bands.addBand(new Band("Killers"));
 bands.addBand(new Band("Offspring"));
@@ -32,20 +32,5 @@ io.on("connection", (client) => {
 
   client.on("vote-band", (payload) => {
     console.log(payload);
-    bands.voteBand(payload.id);
-    io.emit("active bands", bands.getBands());
-  });
-
-  client.on("add-band", (payload) => {
-    console.log(payload);
-    const newBand = new Band(payload.name);
-    bands.addBand(newBand);
-    io.emit("active bands", bands.getBands());
-  });
-
-  client.on("delete-band", (payload) => {
-    console.log(payload);
-    bands.deleteBand(payload.id);
-    io.emit("active bands", bands.getBands());
   });
 });
